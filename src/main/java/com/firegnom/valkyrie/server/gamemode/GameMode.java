@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.firegnom.valkyrie.server.gamemode;
 
 import java.io.Serializable;
@@ -22,102 +25,215 @@ import com.firegnom.valkyrie.server.player.User;
 import com.sun.sgs.app.AppContext;
 import com.sun.sgs.app.ManagedReference;
 
-public  class GameMode implements MessageListener ,Serializable{
-  private static final Logger logger = Logger.getLogger(GameMode.class.getName());
-  private static final long serialVersionUID = 1L;
-  
-  
-  ManagedReference<User> user ;
-  
-  public int getType(){
-    return 0;
-  }
-  
-  public void join(User user) {
-    this.user = AppContext.getDataManager().createReference(user);
-  }
-  public  void leave(){
-    this.user = null;
-  }
+// TODO: Auto-generated Javadoc
+/**
+ * The Class GameMode.
+ */
+public class GameMode implements MessageListener, Serializable {
 
-  @Override
-  public void received(PlayerMove customType) {
-    logger.log(Level.INFO,"received:PlayerMove");
-    
-  }
+	/** The Constant logger. */
+	private static final Logger logger = Logger.getLogger(GameMode.class
+			.getName());
 
-  @Override
-  public void received(ConfirmMove customType) {
-    // TODO Auto-generated method stub
-    
-  }
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 1L;
 
-  @Override
-  public void received(PlayerDisconnected customType) {
-    // TODO Auto-generated method stub
-    
-  }
+	/** The user. */
+	ManagedReference<User> user;
 
-  @Override
-  public void received(ChatMessage customType) {
-    // TODO Auto-generated method stub
-    
-  }
+	/**
+	 * Gets the type.
+	 * 
+	 * @return the type
+	 */
+	public int getType() {
+		return 0;
+	}
 
-  @Override
-  public void received(ChatUserJoined customType) {
-    // TODO Auto-generated method stub
-    
-  }
+	/**
+	 * Join.
+	 * 
+	 * @param user
+	 *            the user
+	 */
+	public void join(User user) {
+		this.user = AppContext.getDataManager().createReference(user);
+	}
 
-  @Override
-  public void received(ChatUserLeft customType) {
-    // TODO Auto-generated method stub
-    
-  }
+	/**
+	 * Leave.
+	 */
+	public void leave() {
+		this.user = null;
+	}
 
-  @Override
-  public void received(CreateUserMessage customType) {
-    // TODO Auto-generated method stub
-    
-  }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.firegnom.valkyrie.net.protocol.helper.MessageListener#received(com
+	 * .firegnom.valkyrie.net.protocol.PlayerMove)
+	 */
+	@Override
+	public void received(PlayerMove customType) {
+		logger.log(Level.INFO, "received:PlayerMove");
 
-  @Override
-  public void received(ChangeGameMode customType) {
-    // TODO Auto-generated method stub
-    
-  }
+	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.firegnom.valkyrie.net.protocol.helper.MessageListener#received(com
+	 * .firegnom.valkyrie.net.protocol.ConfirmMove)
+	 */
+	@Override
+	public void received(ConfirmMove customType) {
+		// TODO Auto-generated method stub
 
-  @Override
-  public void received(PlayerPositionMessage customType) {
-    // TODO Auto-generated method stub
-    
-  }
+	}
 
-  @Override
-  public void received(RequestPlayerInfoMessage customType) {
-    // TODO Auto-generated method stub
-    
-  }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.firegnom.valkyrie.net.protocol.helper.MessageListener#received(com
+	 * .firegnom.valkyrie.net.protocol.PlayerDisconnected)
+	 */
+	@Override
+	public void received(PlayerDisconnected customType) {
+		// TODO Auto-generated method stub
 
-  @Override
-  public void received(PlayerInfoMessage customType) {
-    // TODO Auto-generated method stub
-    
-  }
+	}
 
-  @Override
-  public void received(PlayerPositionsMessage customType) {
-    // TODO Auto-generated method stub
-    
-  }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.firegnom.valkyrie.net.protocol.helper.MessageListener#received(com
+	 * .firegnom.valkyrie.net.protocol.ChatMessage)
+	 */
+	@Override
+	public void received(ChatMessage customType) {
+		// TODO Auto-generated method stub
 
-  @Override
-  public void received(RequestPlayersPositionMessage customType) {
-    // TODO Auto-generated method stub
-    
-  }
-  
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.firegnom.valkyrie.net.protocol.helper.MessageListener#received(com
+	 * .firegnom.valkyrie.net.protocol.ChatUserJoined)
+	 */
+	@Override
+	public void received(ChatUserJoined customType) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.firegnom.valkyrie.net.protocol.helper.MessageListener#received(com
+	 * .firegnom.valkyrie.net.protocol.ChatUserLeft)
+	 */
+	@Override
+	public void received(ChatUserLeft customType) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.firegnom.valkyrie.net.protocol.helper.MessageListener#received(com
+	 * .firegnom.valkyrie.net.protocol.CreateUserMessage)
+	 */
+	@Override
+	public void received(CreateUserMessage customType) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.firegnom.valkyrie.net.protocol.helper.MessageListener#received(com
+	 * .firegnom.valkyrie.net.protocol.ChangeGameMode)
+	 */
+	@Override
+	public void received(ChangeGameMode customType) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.firegnom.valkyrie.net.protocol.helper.MessageListener#received(com
+	 * .firegnom.valkyrie.net.protocol.PlayerPositionMessage)
+	 */
+	@Override
+	public void received(PlayerPositionMessage customType) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.firegnom.valkyrie.net.protocol.helper.MessageListener#received(com
+	 * .firegnom.valkyrie.net.protocol.RequestPlayerInfoMessage)
+	 */
+	@Override
+	public void received(RequestPlayerInfoMessage customType) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.firegnom.valkyrie.net.protocol.helper.MessageListener#received(com
+	 * .firegnom.valkyrie.net.protocol.PlayerInfoMessage)
+	 */
+	@Override
+	public void received(PlayerInfoMessage customType) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.firegnom.valkyrie.net.protocol.helper.MessageListener#received(com
+	 * .firegnom.valkyrie.net.protocol.PlayerPositionsMessage)
+	 */
+	@Override
+	public void received(PlayerPositionsMessage customType) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.firegnom.valkyrie.net.protocol.helper.MessageListener#received(com
+	 * .firegnom.valkyrie.net.protocol.RequestPlayersPositionMessage)
+	 */
+	@Override
+	public void received(RequestPlayersPositionMessage customType) {
+		// TODO Auto-generated method stub
+
+	}
 
 }

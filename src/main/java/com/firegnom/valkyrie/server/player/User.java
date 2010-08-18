@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.firegnom.valkyrie.server.player;
 
 import java.io.Serializable;
@@ -17,122 +20,224 @@ import com.sun.sgs.app.ManagedObject;
 import com.sun.sgs.app.ManagedReference;
 import com.sun.sgs.app.ObjectNotFoundException;
 
-public class User implements ClientSessionListener,ManagedObject, Serializable, Player{
-  private static final Logger logger = Logger.getLogger(User.class.getName());
-  private static final long serialVersionUID = 1L;
-  private String username;
+// TODO: Auto-generated Javadoc
+/**
+ * The Class User.
+ */
+public class User implements ClientSessionListener, ManagedObject,
+		Serializable, Player {
 
-  //  put position in to the different class and only keep reference
-  private Point position;
-  public int playerClass; 
-  
-  private GameMode mode;
-  private ManagedReference<? extends ClientSession> sessionRef;
-  private ManagedReference <Zone> zone;
-  private boolean created = false;
-  
-  
-  public User(String username) {
-    logger.log(Level.INFO,"User : {0} created:",username);
-    this.username = username;
-  }
-  public void setSession(ClientSession session){
-    //check if u are logged in already;
-    sessionRef = AppContext.getDataManager().createReference(session);
-  }
-  
-  
-  public void changeMode(GameMode m){
-    logger.log(Level.INFO,"chamgeing game mode to :{0}",m.getType());
-    if (mode != null){
-      mode.leave();
-    }
-    this.mode = m;
-    m.join(this);
-  }
+	/** The Constant logger. */
+	private static final Logger logger = Logger.getLogger(User.class.getName());
 
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 1L;
 
+	/** The username. */
+	private String username;
 
-  @Override
-  public void disconnected(boolean arg0) {
-      changeMode(new LoggedOutMode());
-  }
+	// put position in to the different class and only keep reference
+	/** The position. */
+	private Point position;
 
-  @Override
-  public void receivedMessage(ByteBuffer arg0) {
-   logger.log(Level.INFO,"User : {0} recieaved message:",username);
-   Protocol protocol = new Protocol(mode);
-   protocol.decode(arg0);
-  }
-  
- 
-  @Override
-  public Point getPosition() {
-    return position; 
-  }
-  
-  public void setPosition(Point position) {
-    this.position = position;
-  }
-  @Override
-  public void send(ByteBuffer bb){
-    ClientSession clientSession;
-    try{
-     clientSession = sessionRef.get();
-    }catch (ObjectNotFoundException e) {
-      logger.log(Level.INFO,"My mode should be 2 and is :{0}",mode.getType());
-      return;
-    }
-    clientSession.send(bb);
-  }
+	/** The player class. */
+	public int playerClass;
 
+	/** The mode. */
+	private GameMode mode;
 
+	/** The session ref. */
+	private ManagedReference<? extends ClientSession> sessionRef;
 
+	/** The zone. */
+	private ManagedReference<Zone> zone;
 
-  @Override
-  public String getName() {
-    return username;
-  }
+	/** The created. */
+	private boolean created = false;
 
+	/**
+	 * Instantiates a new user.
+	 * 
+	 * @param username
+	 *            the username
+	 */
+	public User(String username) {
+		logger.log(Level.INFO, "User : {0} created:", username);
+		this.username = username;
+	}
 
-  public boolean isCreated() {
-    return created ;
-  }
+	/**
+	 * Sets the session.
+	 * 
+	 * @param session
+	 *            the new session
+	 */
+	public void setSession(ClientSession session) {
+		// check if u are logged in already;
+		sessionRef = AppContext.getDataManager().createReference(session);
+	}
 
+	/**
+	 * Change mode.
+	 * 
+	 * @param m
+	 *            the m
+	 */
+	public void changeMode(GameMode m) {
+		logger.log(Level.INFO, "chamgeing game mode to :{0}", m.getType());
+		if (mode != null) {
+			mode.leave();
+		}
+		this.mode = m;
+		m.join(this);
+	}
 
-  @Override
-  public GameMode getMode() {
-    return mode;
-  }
-  
-  public void setCreated(boolean b) {
-    created = b;
-  }
-  
-  public void setZone(Zone zone) {
-    if (this.zone!=null) this.zone.get().leave(this); 
-    this.zone = AppContext.getDataManager().createReference(zone);
-    zone.join(this);
-  }
-  public Zone getZone() {
-    return zone.get();
-  }
-  @Override
-  public int getPlayerClass() {
-    return playerClass;
-  }
-  public boolean listen(int flag){
-    switch (flag){
-      case LISTEN_MOVES:
-        return true;
-    }
-    return false;
-  }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sun.sgs.app.ClientSessionListener#disconnected(boolean)
+	 */
+	@Override
+	public void disconnected(boolean arg0) {
+		changeMode(new LoggedOutMode());
+	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.sun.sgs.app.ClientSessionListener#receivedMessage(java.nio.ByteBuffer
+	 * )
+	 */
+	@Override
+	public void receivedMessage(ByteBuffer arg0) {
+		logger.log(Level.INFO, "User : {0} recieaved message:", username);
+		Protocol protocol = new Protocol(mode);
+		protocol.decode(arg0);
+	}
 
-  
- 
-  
-  
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.firegnom.valkyrie.server.player.Player#getPosition()
+	 */
+	@Override
+	public Point getPosition() {
+		return position;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.firegnom.valkyrie.server.player.Player#setPosition(com.firegnom.valkyrie
+	 * .util.Point)
+	 */
+	public void setPosition(Point position) {
+		this.position = position;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.firegnom.valkyrie.server.player.Player#send(java.nio.ByteBuffer)
+	 */
+	@Override
+	public void send(ByteBuffer bb) {
+		ClientSession clientSession;
+		try {
+			clientSession = sessionRef.get();
+		} catch (ObjectNotFoundException e) {
+			logger.log(Level.INFO, "My mode should be 2 and is :{0}",
+					mode.getType());
+			return;
+		}
+		clientSession.send(bb);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.firegnom.valkyrie.server.player.Player#getName()
+	 */
+	@Override
+	public String getName() {
+		return username;
+	}
+
+	/**
+	 * Checks if is created.
+	 * 
+	 * @return true, if is created
+	 */
+	public boolean isCreated() {
+		return created;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.firegnom.valkyrie.server.player.Player#getMode()
+	 */
+	@Override
+	public GameMode getMode() {
+		return mode;
+	}
+
+	/**
+	 * Sets the created.
+	 * 
+	 * @param b
+	 *            the new created
+	 */
+	public void setCreated(boolean b) {
+		created = b;
+	}
+
+	/**
+	 * Sets the zone.
+	 * 
+	 * @param zone
+	 *            the new zone
+	 */
+	public void setZone(Zone zone) {
+		if (this.zone != null) {
+			this.zone.get().leave(this);
+		}
+		this.zone = AppContext.getDataManager().createReference(zone);
+		zone.join(this);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.firegnom.valkyrie.server.player.Player#getZone()
+	 */
+	public Zone getZone() {
+		return zone.get();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.firegnom.valkyrie.server.player.Player#getPlayerClass()
+	 */
+	@Override
+	public int getPlayerClass() {
+		return playerClass;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.firegnom.valkyrie.server.player.Player#listen(int)
+	 */
+	public boolean listen(int flag) {
+		switch (flag) {
+		case LISTEN_MOVES:
+			return true;
+		}
+		return false;
+	}
 
 }

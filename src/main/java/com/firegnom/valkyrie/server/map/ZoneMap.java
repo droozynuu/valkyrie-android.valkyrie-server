@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.firegnom.valkyrie.server.map;
 
 import java.io.Serializable;
@@ -6,57 +9,111 @@ import com.firegnom.valkyrie.map.pathfinding.AStarPathFinder;
 import com.firegnom.valkyrie.map.pathfinding.Mover;
 import com.firegnom.valkyrie.map.pathfinding.Pathfindable;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ZoneMap.
+ */
+public class ZoneMap implements Pathfindable, Serializable {
 
-public class ZoneMap implements Pathfindable, Serializable{
-  /**
-   * 
-   */
-  private static final long serialVersionUID = 1L;
-  public int width;
-  public int height;
-  
-  public short[][] moveMatrix;
-//  public AStarPathFinder finder;
-  
-  public ZoneMap(int width, int height) {
-    this.width = width;
-    this.height = height;
-    moveMatrix = new short[width][height];
-//    finder = new AStarPathFinder(this, 20, 500, true);
-  }
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 1L;
 
-  
-  @Override
-  public int getHeightInTiles() {
-    return height ;
-  }
+	/** The width. */
+	public int width;
 
-  @Override
-  public int getWidthInTiles() {
-    return width;
-  }
+	/** The height. */
+	public int height;
 
-  @Override
-  public void pathFinderVisited(int x, int y) {
-  }
-  
-  public AStarPathFinder getFinder(){
-    return new AStarPathFinder(this, 20, 500, true);
-  }
+	/** The move matrix. */
+	public short[][] moveMatrix;
 
-  @Override
-  public boolean blocked(Mover mover, int x, int y) {
-    if (x>=width||x <0) return true;
-    if (y>=height||y <0) return true;
-    return moveMatrix[x][y] != 0;
-  }
+	// public AStarPathFinder finder;
 
-  @Override
-  public float getCost(Mover mover, int sx, int sy, int tx, int ty) {
-    // TODO Auto-generated method stub
-    return 1;
-  }
+	/**
+	 * Instantiates a new zone map.
+	 * 
+	 * @param width
+	 *            the width
+	 * @param height
+	 *            the height
+	 */
+	public ZoneMap(int width, int height) {
+		this.width = width;
+		this.height = height;
+		moveMatrix = new short[width][height];
+		// finder = new AStarPathFinder(this, 20, 500, true);
+	}
 
- 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.firegnom.valkyrie.map.pathfinding.Pathfindable#getHeightInTiles()
+	 */
+	@Override
+	public int getHeightInTiles() {
+		return height;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.firegnom.valkyrie.map.pathfinding.Pathfindable#getWidthInTiles()
+	 */
+	@Override
+	public int getWidthInTiles() {
+		return width;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.firegnom.valkyrie.map.pathfinding.Pathfindable#pathFinderVisited(int,
+	 * int)
+	 */
+	@Override
+	public void pathFinderVisited(int x, int y) {
+	}
+
+	/**
+	 * Gets the finder.
+	 * 
+	 * @return the finder
+	 */
+	public AStarPathFinder getFinder() {
+		return new AStarPathFinder(this, 20, 500, true);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.firegnom.valkyrie.map.pathfinding.Pathfindable#blocked(com.firegnom
+	 * .valkyrie.map.pathfinding.Mover, int, int)
+	 */
+	@Override
+	public boolean blocked(Mover mover, int x, int y) {
+		if (x >= width || x < 0) {
+			return true;
+		}
+		if (y >= height || y < 0) {
+			return true;
+		}
+		return moveMatrix[x][y] != 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.firegnom.valkyrie.map.pathfinding.Pathfindable#getCost(com.firegnom
+	 * .valkyrie.map.pathfinding.Mover, int, int, int, int)
+	 */
+	@Override
+	public float getCost(Mover mover, int sx, int sy, int tx, int ty) {
+		// TODO Auto-generated method stub
+		return 1;
+	}
 
 }
