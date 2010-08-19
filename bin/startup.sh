@@ -13,4 +13,10 @@ stop)
 hotbackup)
         db4.5_hotbackup  -cuh $SERVER/data/dsdb/  -b $SERVER/data/backup
         ;;
+cleanrestart)
+	skill -9 java
+	rm -rf $SERVER/data/
+	nohup $JAVA -jar $SERVER/bin/sgs-boot.jar > /home/macio/valkyrie/log/dev.log&
+	;;
+	
 esac
