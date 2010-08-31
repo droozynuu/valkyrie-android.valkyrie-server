@@ -44,8 +44,7 @@ import com.sun.sgs.app.ObjectNotFoundException;
 /**
  * The Class User.
  */
-public class User implements ClientSessionListener, ManagedObject,
-		Serializable, Player {
+public class User extends Player implements ClientSessionListener{
 
 	/** The Constant logger. */
 	private static final Logger logger = Logger.getLogger(User.class.getName());
@@ -56,10 +55,7 @@ public class User implements ClientSessionListener, ManagedObject,
 	/** The username. */
 	private String username;
 
-	// put position in to the different class and only keep reference
-	/** The position. */
-	private Point position;
-
+	
 	/** The player class. */
 	public int playerClass;
 
@@ -136,26 +132,8 @@ public class User implements ClientSessionListener, ManagedObject,
 		protocol.decode(arg0);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.firegnom.valkyrie.server.player.Player#getPosition()
-	 */
-	@Override
-	public Point getPosition() {
-		return position;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.firegnom.valkyrie.server.player.Player#setPosition(com.firegnom.valkyrie
-	 * .util.Point)
-	 */
-	public void setPosition(Point position) {
-		this.position = position;
-	}
+	
+	
 
 	/*
 	 * (non-Javadoc)

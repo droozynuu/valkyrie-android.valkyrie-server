@@ -33,6 +33,7 @@ import com.firegnom.valkyrie.net.protocol.helper.Protocol;
 import com.firegnom.valkyrie.server.player.MobPlayer;
 import com.firegnom.valkyrie.server.player.Player;
 import com.firegnom.valkyrie.share.constant.GameModes;
+import com.firegnom.valkyrie.util.Point;
 import com.sun.sgs.app.AppContext;
 import com.sun.sgs.app.ManagedReference;
 
@@ -63,8 +64,9 @@ public class MobMapMode extends GameMode {
 		PlayerPositionMessage jppm = new PlayerPositionMessage();
 		jppm.userName = user.getName();
 		jppm.playerClass = user.getPlayerClass();
-		jppm.x = (short) user.getPosition().getX();
-		jppm.y = (short) user.getPosition().getY();
+		Point pos  = user.getPosition().get().getPosition();
+		jppm.x = (short) pos.getX();
+		jppm.y = (short) pos.getY();
 		HashSet<Player> inRange = user.getZone().getPlayersInRange(user,
 				Constants.VISIBILITY_RANGE);
 		for (Player u : inRange) {

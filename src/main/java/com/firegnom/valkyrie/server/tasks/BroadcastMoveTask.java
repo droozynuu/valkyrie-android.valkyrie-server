@@ -32,6 +32,7 @@ import com.firegnom.valkyrie.map.pathfinding.Mover;
 import com.firegnom.valkyrie.net.protocol.Path;
 import com.firegnom.valkyrie.net.protocol.PlayerMove;
 import com.firegnom.valkyrie.net.protocol.helper.Protocol;
+import com.firegnom.valkyrie.server.map.Zone;
 import com.firegnom.valkyrie.server.map.ZoneMap;
 import com.firegnom.valkyrie.server.player.MobPlayer;
 import com.firegnom.valkyrie.server.player.Player;
@@ -56,23 +57,26 @@ public class BroadcastMoveTask implements Task, Mover, Serializable {
 	/** The zone map. */
 	ZoneMap zoneMap;
 
-	/** The last position. */
-	Point lastPosition;
+	/** The start. */
+	Point start;
+	
+	/** The stop. */
+	Point stop;
 
+	
 	/**
 	 * Instantiates a new broadcast move task.
-	 * 
-	 * @param player
-	 *            the player
-	 * @param zonemap
-	 *            the zonemap
-	 * @param lastposition
-	 *            the lastposition
+	 *
+	 * @param player the player
+	 * @param zonemap the zonemap
+	 * @param start the start
+	 * @param stop the stop
 	 */
 	public BroadcastMoveTask(MobPlayer player, ZoneMap zonemap,
-			Point lastposition) {
+			Point start, Point stop) {
 		this.player = AppContext.getDataManager().createReference(player);
-		lastPosition = lastposition;
+		this.start = start;
+		this.stop = stop;
 		zoneMap = zonemap;
 	}
 
@@ -84,24 +88,27 @@ public class BroadcastMoveTask implements Task, Mover, Serializable {
 	@Override
 	public void run() throws Exception {
 		MobPlayer p = player.get();
-		Point po = p.getPosition();
 		AStarPathFinder finder = zoneMap.getFinder();
 		if (finder == null) {
 			throw new RuntimeException("null finder ");
 		}
 		com.firegnom.valkyrie.map.pathfinding.Path findPath = finder.findPath(
-				null, lastPosition.getX(), lastPosition.getY(), po.getX(),
-				po.getY());
+				null, start.getX(), start.getY(), stop.getX(),
+				stop.getY());
 		if (findPath == null) {
 			return;
 		}
 		Path path = findPath.convertToNetPath();
+
+		Zone zone 	= p.getZone();
 		HashSet<Player> inRange = p.getZone().getPlayersInRange(p,
-				lastPosition, Constants.VISIBILITY_RANGE, GameModes.MAP_MODE);
+				stop, Constants.VISIBILITY_RANGE, GameModes.MAP_MODE);
+		
 		PlayerMove pm = new PlayerMove();
 		pm.playerName = p.getName();
 		pm.playerClass = p.getPlayerClass();
 		pm.path = path;
+		
 		for (Player user : inRange) {
 			user.send(Protocol.encode(pm));
 		}

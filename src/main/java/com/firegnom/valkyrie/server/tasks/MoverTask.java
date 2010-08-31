@@ -25,10 +25,16 @@ package com.firegnom.valkyrie.server.tasks;
 
 import java.io.Serializable;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.management.RuntimeErrorException;
 
 import com.firegnom.valkyrie.map.pathfinding.Mover;
+import com.firegnom.valkyrie.server.ValkyrieServer;
 import com.firegnom.valkyrie.server.map.ZoneMap;
 import com.firegnom.valkyrie.server.player.MobPlayer;
+import com.firegnom.valkyrie.server.player.PlayerPosition;
 import com.firegnom.valkyrie.util.Point;
 import com.sun.sgs.app.AppContext;
 import com.sun.sgs.app.ManagedReference;
@@ -42,6 +48,9 @@ public class MoverTask implements Task, Mover, Serializable {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	private static final Logger logger = Logger.getLogger(MoverTask.class
+			.getName());
 
 	/** The player. */
 	ManagedReference<MobPlayer> player;
@@ -59,7 +68,7 @@ public class MoverTask implements Task, Mover, Serializable {
 	 */
 	public MoverTask(MobPlayer player, ZoneMap zonemap) {
 		this.player = AppContext.getDataManager().createReference(player);
-		zoneMap = zonemap;
+		this.zoneMap = zonemap;
 	}
 
 	/*
@@ -70,8 +79,9 @@ public class MoverTask implements Task, Mover, Serializable {
 	@Override
 	public void run() throws Exception {
 		Random r = new Random();
-		MobPlayer p = player.getForUpdate();
-		Point po = p.getPosition();
+		MobPlayer p = player.get();
+		PlayerPosition pp = p.getPosition().getForUpdate();
+		Point po = pp.getPosition().clone();
 		Point po1 = null;
 
 		// TODO limit try times !!!!
@@ -82,14 +92,14 @@ public class MoverTask implements Task, Mover, Serializable {
 				po1 = null;
 				continue;
 			}
-			if (!po1.inRange(p.getStartPosition(), p.getMoveRange())) {
+			if (!po1.inRange(po, p.getMoveRange())) {
 				po1 = null;
 				continue;
 			}
 		}
-		p.setPosition(po1);
+		pp.setPosition(po1);
 		AppContext.getTaskManager().scheduleTask(
-				new BroadcastMoveTask(p, zoneMap, po));
+				new BroadcastMoveTask(p, zoneMap, po,po1));
 		// Random r = new Random();
 		// AppContext.getTaskManager().scheduleTask(new
 		// MoverTask(p,zoneMap),r.nextInt(10000));

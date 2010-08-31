@@ -61,7 +61,7 @@
 # files from the ${SGS_HOME}/lib directory will be included
 # on the classpath.
 #
-#BDB_TYPE = db
+BDB_TYPE = je
 
 # Set this property to change the location of the 
 # BerkeleyDB native libraries to use when running the 

@@ -31,7 +31,7 @@
   </pluginRepositories>
   <dependencies>
     <dependency>
-      <groupId>com.projectdarkstar.server</groupId>
+      <groupId>org.reddwarfserver.server</groupId>
       <artifactId>sgs-server-api</artifactId>
       <version>${sgs-server.version}</version>
     </dependency>
@@ -45,12 +45,12 @@
     	<artifactId>slipstream-server</artifactId>
     	<version>1</version>
     </dependency-->
-      <dependency>
+      <!-- dependency>
       <groupId>com.projectdarkstar.ext.berkeleydb</groupId>
       <artifactId>je</artifactId>
       <version>3.2.23</version>
       <scope>runtime</scope>
-    </dependency>
+    </dependency-->
     <!-- dependency>
     	<groupId>com.gamalocus.sgs</groupId>
 		  <artifactId>darkstar-profiler-listener</artifactId>
@@ -73,7 +73,7 @@
   </build>
  
   <properties>
-    <sgs-server.version>0.9.11</sgs-server.version>
+    <sgs-server.version>0.10.1</sgs-server.version>
   </properties>
  
  
@@ -83,9 +83,9 @@
       <build>
   <plugins>
           <plugin>
-            <groupId>com.projectdarkstar.maven.plugin</groupId>
+            <groupId>org.reddwarfserver.maven.plugin</groupId>
             <artifactId>sgs-maven-plugin</artifactId>
-            <version>1.0-beta-1</version>
+            <version>1.0-beta-2</version>
             <executions>
               <execution>
                 <id>sgs-run</id>

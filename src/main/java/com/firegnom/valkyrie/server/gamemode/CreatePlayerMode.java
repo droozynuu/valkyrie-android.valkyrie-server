@@ -30,6 +30,7 @@ import com.firegnom.valkyrie.net.protocol.CreateUserMessage;
 import com.firegnom.valkyrie.net.protocol.helper.Protocol;
 import com.firegnom.valkyrie.server.ValkyrieServer;
 import com.firegnom.valkyrie.server.helpers.ZoneHelper;
+import com.firegnom.valkyrie.server.player.PlayerPosition;
 import com.firegnom.valkyrie.server.player.User;
 import com.firegnom.valkyrie.share.constant.GameModes;
 import com.firegnom.valkyrie.util.Point;
@@ -86,7 +87,8 @@ public class CreatePlayerMode extends GameMode {
 		u.setCreated(true);
 		u.setZone(ZoneHelper.getZone(ValkyrieServer.INTRO_ZONE));
 		u.playerClass = customType.playerClass;
-		u.setPosition(new Point(9, 9));
+		
+		u.setPosition(new PlayerPosition(9, 9));
 		u.changeMode(new MapMode());
 	}
 

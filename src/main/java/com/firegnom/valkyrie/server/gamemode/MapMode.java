@@ -71,10 +71,11 @@ public class MapMode extends GameMode {
 		cgm.type = this.getType();
 		user.send(Protocol.encode(cgm));
 		PlayerPositionMessage jppm = new PlayerPositionMessage();
+		Point pos  = user.getPosition().get().getPosition();
 		jppm.userName = user.getName();
 		jppm.playerClass = user.playerClass;
-		jppm.x = (short) user.getPosition().getX();
-		jppm.y = (short) user.getPosition().getY();
+		jppm.x = (short) pos.getX();
+		jppm.y = (short) pos.getY();
 		HashSet<Player> inRange = user.getZone().getPlayersInRange(user,
 				Constants.VISIBILITY_RANGE);
 		ArrayList<PlayerPositionMessage> ppms = new ArrayList<PlayerPositionMessage>();
@@ -83,8 +84,9 @@ public class MapMode extends GameMode {
 				u.send(Protocol.encode(jppm));
 				PlayerPositionMessage ppm = new PlayerPositionMessage();
 				ppm.playerClass = u.getPlayerClass();
-				ppm.x = (short) u.getPosition().getX();
-				ppm.y = (short) u.getPosition().getY();
+				Point pos1  = u.getPosition().get().getPosition();
+				ppm.x = (short) pos1.getX();
+				ppm.y = (short) pos1.getY();
 				ppm.userName = u.getName();
 				ppms.add(ppm);
 			}
@@ -133,23 +135,26 @@ public class MapMode extends GameMode {
 		logger.log(Level.FINE, "received:PlayerMoveposition {0}", p);
 		// change this code to a new function which takes 2 parameters start and
 		// stop
-		User u = user.getForUpdate();
+		User u = user.get();
 		HashSet<Player> inRange = u.getZone().getPlayersInRange(u,
 				Constants.VISIBILITY_RANGE);
-		u.setPosition(p);
+		u.getPosition().getForUpdate().setPosition(p);
 		inRange = u.getZone().getPlayersInRange(u, Constants.VISIBILITY_RANGE,
 				inRange);
 		if (inRange.size() <= 0) {
 			return;
 		}
+		
+		//new task 
 		ArrayList<PlayerPositionMessage> ppms = new ArrayList<PlayerPositionMessage>();
 		for (Player user : inRange) {
 			if (user.getMode().getType() == GameModes.MAP_MODE) {
 				user.send(Protocol.encode(customType));
 				PlayerPositionMessage ppm = new PlayerPositionMessage();
 				ppm.playerClass = user.getPlayerClass();
-				ppm.x = (short) user.getPosition().getX();
-				ppm.y = (short) user.getPosition().getY();
+				Point pos  = user.getPosition().get().getPosition();
+				ppm.x = (short) pos.getX();
+				ppm.y = (short) pos.getY();
 				ppm.userName = user.getName();
 				ppms.add(ppm);
 			}
@@ -182,8 +187,9 @@ public class MapMode extends GameMode {
 			if (u.getMode().getType() == GameModes.MAP_MODE) {
 				PlayerPositionMessage ppm = new PlayerPositionMessage();
 				ppm.playerClass = u.getPlayerClass();
-				ppm.x = (short) u.getPosition().getX();
-				ppm.y = (short) u.getPosition().getY();
+				Point pos  = u.getPosition().get().getPosition();
+				ppm.x = (short) pos.getX();
+				ppm.y = (short) pos.getY();
 				ppm.userName = u.getName();
 				ppms.add(ppm);
 			}
@@ -217,8 +223,9 @@ public class MapMode extends GameMode {
 		User u = user.get();
 		msg.userName = u.getName();
 		msg.playerClass = u.playerClass;
-		msg.x = (short) u.getPosition().getX();
-		msg.y = (short) u.getPosition().getY();
+		Point pos  = u.getPosition().get().getPosition();
+		msg.x = (short) pos.getX();
+		msg.y = (short) pos.getY();
 		PlayerInfoMessage m = new PlayerInfoMessage();
 		m.zoneName = u.getZone().getName();
 		m.position = msg;

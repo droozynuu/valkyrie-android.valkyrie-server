@@ -37,6 +37,7 @@ import com.firegnom.valkyrie.server.helpers.ZoneHelper;
 import com.firegnom.valkyrie.server.map.Zone;
 import com.firegnom.valkyrie.server.map.ZoneMap;
 import com.firegnom.valkyrie.server.player.MobPlayer;
+import com.firegnom.valkyrie.server.player.PlayerPosition;
 import com.firegnom.valkyrie.server.player.User;
 import com.firegnom.valkyrie.util.Point;
 import com.sun.sgs.app.AppListener;
@@ -72,48 +73,48 @@ public class ValkyrieServer implements AppListener, Serializable,
 	 * @see com.sun.sgs.app.AppListener#initialize(java.util.Properties)
 	 */
 	public void initialize(Properties props) {
-
 		Zone intro = new Zone(INTRO_ZONE);
 		intro.setZoneMap(new ZoneMap(80, 80));
 		ZoneHelper.addZone(intro);
 
 		Random r = new Random();
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 10; i++) {
 			int x = r.nextInt(80);
 			int y = r.nextInt(80);
-			MobPlayer rabbit = new MobPlayer("MobPlayer-" + i);
-			rabbit.setStartPosition(new Point(x, y));
-			rabbit.setPlayerClass(5 + r.nextInt(5));
-			rabbit.setZone(intro);
-			rabbit.setMoveRange(5);
+			MobPlayer mob = new MobPlayer("MobPlayer-" + i);
+			mob.setPosition(new PlayerPosition(x, y));
+			mob.setPlayerClass(5 + r.nextInt(5));
+			mob.setZone(intro);
+			mob.setMoveRange(5);
 			MobMapMode mmm = new MobMapMode();
-			rabbit.setMode(mmm);
-			intro.join(rabbit);
-			mmm.join(rabbit);
-			PlayerHelper.addMobPlayer(rabbit);
-			rabbit.startAI();
+			mob.setMode(mmm);
+			intro.join(mob);
+			mmm.join(mob);
+			PlayerHelper.addMobPlayer(mob);
+			mob.startAI();
 		}
 
-		// for (int j = 0 ; j < 100;j++){
-		// Zone zone = new Zone("intro_"+j);
-		// zone.setZoneMap(new ZoneMap(80, 80));
-		// ZoneHelper.addZone(zone);
-		//
-		// for (int i = 0 ; i < 10;i++){
-		// int x= r.nextInt(80);
-		// int y = r.nextInt(80);
-		// MobPlayer rabbit = new MobPlayer("MobPlayer-"+x+","+y);
-		// rabbit.setPosition(new Point(x, y));
-		// rabbit.setPlayerClass(5+r.nextInt(4));
-		// rabbit.setZone(zone);
-		// MobMapMode mmm= new MobMapMode();
-		// rabbit.setMode(mmm);
-		// zone.join(rabbit);
-		// mmm.join(rabbit);
-		// PlayerHelper.addMobPlayer(rabbit);
-		// rabbit.startAI();
-		// }
-		// }
+		 for (int j = 10 ; j < 100;j++){
+			 Zone zone = new Zone("intro_"+j);
+			 zone.setZoneMap(new ZoneMap(80, 80));
+			 ZoneHelper.addZone(zone);
+			
+			 for (int i = 0 ; i < 20;i++){
+				 int x = r.nextInt(80);
+					int y = r.nextInt(80);
+					MobPlayer mob = new MobPlayer("MobPlayer-" + i);
+					mob.setPosition(new PlayerPosition(x, y));
+					mob.setPlayerClass(5 + r.nextInt(5));
+					mob.setZone(zone);
+					mob.setMoveRange(5);
+					MobMapMode mmm = new MobMapMode();
+					mob.setMode(mmm);
+					zone.join(mob);
+					mmm.join(mob);
+					PlayerHelper.addMobPlayer(mob);
+					mob.startAI();
+			 }
+		 }
 	}
 
 	/*

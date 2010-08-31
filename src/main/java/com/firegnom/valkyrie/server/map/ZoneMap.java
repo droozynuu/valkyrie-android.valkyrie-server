@@ -28,14 +28,17 @@ import java.io.Serializable;
 import com.firegnom.valkyrie.map.pathfinding.AStarPathFinder;
 import com.firegnom.valkyrie.map.pathfinding.Mover;
 import com.firegnom.valkyrie.map.pathfinding.Pathfindable;
+import com.sun.sgs.app.ManagedObject;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ZoneMap.
  */
-public class ZoneMap implements Pathfindable, Serializable {
+public class ZoneMap implements Pathfindable, Serializable{
 
-	/** The Constant serialVersionUID. */
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 
 	/** The width. */

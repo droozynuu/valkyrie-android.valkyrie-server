@@ -112,15 +112,16 @@ public class Zone implements Serializable, ManagedObject {
 	public HashSet<Player> getPlayersInRange(Player user, Point goTo,
 			int range, int mapMode) {
 		HashSet<Player> ret = new HashSet<Player>();
-		Point start = user.getPosition();
+		
+		Point start = user.getPosition().get().getPosition();
 		for (ManagedReference<Player> u : users) {
 			Player us = u.get();
-			if (us.listen(Player.LISTEN_MOVES)
-					&& (!us.getName().equals(user.getName()))
-					&& (us.getMode().getType() == mapMode)
-					&& (us.getPosition().inRange(start, range) || us
-							.getPosition().inRange(goTo, range))) {
-				ret.add(us);
+			if (user.getName().equals(us.getName()))continue;
+			if (us.listen(Player.LISTEN_MOVES) && (us.getMode().getType() == mapMode)){
+				Point pos = us.getPosition().get().getPosition(); 
+				if ((pos.inRange(start, range) || pos.inRange(goTo, range))) {
+					ret.add(us);
+				}
 			}
 		}
 		return ret;
@@ -152,7 +153,7 @@ public class Zone implements Serializable, ManagedObject {
 	 */
 	public HashSet<Player> getPlayersInRange(Player user, int range,
 			HashSet<Player> append) {
-		Point p = user.getPosition();
+		Point p = user.getPosition().get().getPosition();
 		HashSet<Player> ret;
 		if (append == null) {
 			ret = new HashSet<Player>();
@@ -161,7 +162,8 @@ public class Zone implements Serializable, ManagedObject {
 		}
 		for (ManagedReference<Player> u : users) {
 			Player us = u.get();
-			if (us.getPosition().inRange(p, range)
+			
+			if (us.getPosition().get().getPosition().inRange(p, range)
 					&& !us.getName().equals(user.getName())) {
 				ret.add(us);
 			}
@@ -187,5 +189,7 @@ public class Zone implements Serializable, ManagedObject {
 	public ZoneMap getZoneMap() {
 		return zoneMap;
 	}
+	
+
 
 }

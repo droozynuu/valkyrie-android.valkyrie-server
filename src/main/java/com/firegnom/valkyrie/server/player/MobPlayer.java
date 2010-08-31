@@ -31,7 +31,6 @@ import java.util.logging.Logger;
 import com.firegnom.valkyrie.server.gamemode.GameMode;
 import com.firegnom.valkyrie.server.map.Zone;
 import com.firegnom.valkyrie.server.tasks.MoverTask;
-import com.firegnom.valkyrie.util.Point;
 import com.sun.sgs.app.AppContext;
 import com.sun.sgs.app.ManagedObject;
 import com.sun.sgs.app.ManagedReference;
@@ -40,7 +39,7 @@ import com.sun.sgs.app.ManagedReference;
 /**
  * The Class MobPlayer.
  */
-public class MobPlayer implements Player, ManagedObject, Serializable {
+public class MobPlayer extends Player {
 
 	/** The Constant logger. */
 	private static final Logger logger = Logger.getLogger(MobPlayer.class
@@ -51,13 +50,6 @@ public class MobPlayer implements Player, ManagedObject, Serializable {
 
 	/** The name. */
 	private String name;
-
-	// look to user
-	/** The start position. */
-	private Point startPosition;
-
-	/** The position. */
-	private Point position;
 
 	/** The player class. */
 	private int playerClass;
@@ -102,16 +94,7 @@ public class MobPlayer implements Player, ManagedObject, Serializable {
 		return name;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.firegnom.valkyrie.server.player.Player#getPosition()
-	 */
-	@Override
-	public Point getPosition() {
-		// TODO Auto-generated method stub
-		return position;
-	}
+
 
 	/*
 	 * (non-Javadoc)
@@ -133,16 +116,6 @@ public class MobPlayer implements Player, ManagedObject, Serializable {
 		return zone.get();
 	}
 
-	/**
-	 * Sets the position.
-	 * 
-	 * @param position
-	 *            the position to set
-	 */
-
-	public void setPosition(Point position) {
-		this.position = position;
-	}
 
 	/**
 	 * Sets the zone.
@@ -171,7 +144,6 @@ public class MobPlayer implements Player, ManagedObject, Serializable {
 	 */
 	@Override
 	public void send(ByteBuffer bb) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -209,26 +181,7 @@ public class MobPlayer implements Player, ManagedObject, Serializable {
 		return false;
 	}
 
-	/**
-	 * Sets the start position.
-	 * 
-	 * @param startPosition
-	 *            the startPosition to set
-	 */
-	public void setStartPosition(Point startPosition) {
-		this.startPosition = startPosition;
-		this.setPosition(startPosition);
-	}
-
-	/**
-	 * Gets the start position.
-	 * 
-	 * @return the startPosition
-	 */
-	public Point getStartPosition() {
-		return startPosition;
-	}
-
+	
 	/**
 	 * Sets the move range.
 	 * 

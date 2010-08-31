@@ -23,17 +23,24 @@
  */
 package com.firegnom.valkyrie.server.player;
 
+import java.io.Serializable;
 import java.nio.ByteBuffer;
 
 import com.firegnom.valkyrie.server.gamemode.GameMode;
 import com.firegnom.valkyrie.server.map.Zone;
-import com.firegnom.valkyrie.util.Point;
+import com.sun.sgs.app.AppContext;
+import com.sun.sgs.app.ManagedObject;
+import com.sun.sgs.app.ManagedReference;
+
 
 // TODO: Auto-generated Javadoc
 /**
- * The Interface Player.
+ * The Class Player.
  */
-public interface Player {
+public abstract class Player implements  ManagedObject, Serializable {
+
+	/** The position. */
+	private ManagedReference<PlayerPosition> position;
 
 	/** The Constant LISTEN_MOVES. */
 	public static final int LISTEN_MOVES = 0;
@@ -43,14 +50,16 @@ public interface Player {
 	 * 
 	 * @return the name
 	 */
-	public String getName();
+	public abstract String getName();
 
 	/**
 	 * Gets the position.
 	 * 
 	 * @return the position
 	 */
-	public Point getPosition();
+	public ManagedReference<PlayerPosition> getPosition() {
+		return position;
+	}
 
 	/**
 	 * Sets the position.
@@ -58,28 +67,33 @@ public interface Player {
 	 * @param p
 	 *            the new position
 	 */
-	public void setPosition(Point p);
+	public void setPosition(PlayerPosition p) {
+		if (position != null) {
+			AppContext.getDataManager().removeObject(position.getForUpdate());
+		}
+		position = AppContext.getDataManager().createReference(p);
+	}
 
 	/**
 	 * Gets the mode.
 	 * 
 	 * @return the mode
 	 */
-	public GameMode getMode();
+	public abstract GameMode getMode();
 
 	/**
 	 * Gets the player class.
 	 * 
 	 * @return the player class
 	 */
-	public int getPlayerClass();
+	public abstract int getPlayerClass();
 
 	/**
 	 * Gets the zone.
 	 * 
 	 * @return the zone
 	 */
-	public Zone getZone();
+	public abstract Zone getZone();
 
 	/**
 	 * Send.
@@ -87,7 +101,7 @@ public interface Player {
 	 * @param bb
 	 *            the bb
 	 */
-	public void send(ByteBuffer bb);
+	public abstract void send(ByteBuffer bb);
 
 	/**
 	 * Listen.
@@ -96,6 +110,6 @@ public interface Player {
 	 *            the value
 	 * @return true, if successful
 	 */
-	public boolean listen(int value);
+	public abstract boolean listen(int value);
 
 }
